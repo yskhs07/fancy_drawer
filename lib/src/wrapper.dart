@@ -21,6 +21,7 @@ class FancyDrawerWrapper extends StatefulWidget {
   final double cornerRadius;
   final EdgeInsets drawerPadding;
   final Gradient gradient;
+  final Function onClose;
 
   const FancyDrawerWrapper({
     Key key,
@@ -33,6 +34,7 @@ class FancyDrawerWrapper extends StatefulWidget {
     this.hideOnContentTap = true,
     this.cornerRadius = 8.0,
     this.drawerPadding,
+    this.onClose,
   }) : super(key: key);
 
   @override
@@ -70,11 +72,13 @@ class _FancyDrawerWrapperState extends State<FancyDrawerWrapper> {
                 // Swiping in left direction.
                 if (details.delta.dx < -7) {
                   widget.controller.close();
+                  widget.onClose();
                 }
               },
               onTap: () {
                 if (widget.hideOnContentTap) {
                   widget.controller.close();
+                  widget.onClose();
                   print(widget.controller.state.index);
                 }
               },

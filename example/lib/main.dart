@@ -49,8 +49,6 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Material(
       child: FancyDrawerWrapper(
-        ignoreChildGestures: loading,
-        // gradient: LinearGradient(colors: [Colors.black, Colors.white]),
         backgroundColor: Colors.white,
         controller: _controller,
         drawerItems: <Widget>[
