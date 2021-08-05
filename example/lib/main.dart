@@ -44,10 +44,13 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Material(
       child: FancyDrawerWrapper(
+        ignoreChildGestures: loading,
+        // gradient: LinearGradient(colors: [Colors.black, Colors.white]),
         backgroundColor: Colors.white,
         controller: _controller,
         drawerItems: <Widget>[
@@ -106,12 +109,16 @@ class _HomeScreenState extends State<HomeScreen>
                 color: Colors.black,
               ),
               onPressed: () {
+                print(_controller.state.index);
                 _controller.toggle();
+                print(_controller.state.index);
               },
             ),
           ),
           body: Center(
-            child: Text("Body"),
+            child: ListView.builder(itemBuilder: (context, i) {
+              return Text("Body $i");
+            }),
           ),
         ),
       ),

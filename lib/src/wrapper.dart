@@ -20,10 +20,14 @@ class FancyDrawerWrapper extends StatefulWidget {
   final bool hideOnContentTap;
   final double cornerRadius;
   final EdgeInsets drawerPadding;
+  final Gradient gradient;
+  final bool ignoreChildGestures;
 
   const FancyDrawerWrapper({
     Key key,
     @required this.drawerItems,
+    this.gradient,
+    @required this.ignoreChildGestures,
     this.backgroundColor = Colors.white,
     @required this.child,
     @required this.controller,
@@ -63,13 +67,20 @@ class _FancyDrawerWrapperState extends State<FancyDrawerWrapper> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(cornerRadius),
           child: GestureDetector(
-            onTap: () {
-              if (widget.hideOnContentTap) {
-                widget.controller.close();
-              }
-            },
-            child: widget.child,
-          ),
+              behavior: HitTestBehavior.opaque,
+              onPanUpdate: (details) {
+                // Swiping in left direction.
+                if (details.delta.dx < -7) {
+                  widget.controller.close();
+                }
+              },
+              onTap: () {
+                if (widget.hideOnContentTap) {
+                  widget.controller.close();
+                  print(widget.controller.state.index);
+                }
+              },
+              child: widget.child),
         ),
       ),
     );
@@ -82,7 +93,8 @@ class _FancyDrawerWrapperState extends State<FancyDrawerWrapper> {
         Container(
           width: double.infinity,
           height: double.infinity,
-          color: widget.backgroundColor,
+          decoration: BoxDecoration(
+              color: widget.backgroundColor, gradient: widget.gradient),
           child: Center(
             child: ListView(
               padding: widget.drawerPadding ?? EdgeInsets.all(10),
