@@ -21,13 +21,11 @@ class FancyDrawerWrapper extends StatefulWidget {
   final double cornerRadius;
   final EdgeInsets drawerPadding;
   final Gradient gradient;
-  final bool ignoreChildGestures;
 
   const FancyDrawerWrapper({
     Key key,
     @required this.drawerItems,
     this.gradient,
-    @required this.ignoreChildGestures,
     this.backgroundColor = Colors.white,
     @required this.child,
     @required this.controller,
